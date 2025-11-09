@@ -1,3 +1,5 @@
+// app/listings/[listingId]/page.tsx
+
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getListingById from "@/app/actions/getListingById";
 import ClientOnly from "@/app/components/ClientOnly";
@@ -9,18 +11,17 @@ interface IParams {
     listingId?: string
 }
 
-// ⚠️ THE FIX: This type satisfies the strict Next.js/Vercel PageProps constraint
-// by explicitly adding the properties of a Promise to your IParams object.
+// 🚀 THE FINAL FIX: We define a type that satisfies the compiler's demand for a non-optional Promise.
 type PagePropsFix = {
   params: IParams & {
-    then?: any;
-    catch?: any;
-    finally?: any;
+    // 💡 NOTICE: 'then' is now a REQUIRED property (no '?')
+    then: any; 
+    catch?: any; 
+    finally?: any; 
     [Symbol.toStringTag]?: any;
   };
 };
 
-// Use the fix type directly in the component signature
 const ListingPage = async ({ params }: PagePropsFix) => {
     // Cast the params back to IParams for clean usage
     const resolvedParams = params as IParams;
