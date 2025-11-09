@@ -8,7 +8,7 @@ import ListingReservation from "@/app/components/listings/ListingReservation";
 import { categories } from "@/app/components/navbar/Categories";
 import { Reservation } from "@/app/generated/prisma";
 import useLoginModal from "@/app/hooks/useLoginModal";
-import { SafeListing, safeReservations, SafeUser } from "@/app/types";
+import { SafeListing, SafeReservation, SafeUser } from "@/app/types";
 import axios from "axios";
 import { differenceInCalendarDays, eachDayOfInterval, endOfDay, setDate } from "date-fns";
 import { useRouter } from "next/navigation";
@@ -23,7 +23,7 @@ const initialDateRange = {
 };
 
 interface ListingClientProps {
-    reservations?: safeReservations[];
+    reservations?: SafeReservation[];
     listing: SafeListing & {
         user: SafeUser
     };
