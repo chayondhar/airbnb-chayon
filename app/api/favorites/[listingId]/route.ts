@@ -10,7 +10,7 @@ export async function POST(
   request: Request,
   context: { params: Promise<IParams> }
 ) {
-  const { listingId } = await context.params; // 👈 await here!
+  const { listingId } = await context.params; 
   const currentUser = await getCurrentUser();
 
   if (!currentUser) {
