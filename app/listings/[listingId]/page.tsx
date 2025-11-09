@@ -1,49 +1,37 @@
 // app/listings/[listingId]/page.tsx
-
 import getCurrentUser from "@/app/actions/getCurrentUser";
 import getListingById from "@/app/actions/getListingById";
+import getReservations from "@/app/actions/getReservations";
 import ClientOnly from "@/app/components/ClientOnly";
 import EmptyState from "@/app/components/EmptyState";
 import ListingClient from "./ListingClient";
-import getReservations from "@/app/actions/getReservations";
 
 interface IParams {
-    listingId?: string
+  listingId?: string;
 }
 
+const ListingPage = async ({ params }: { params: IParams }) => {
+  const listing = await getListingById(params);
+  const reservations = await getReservations(params);
+  const currentUser = await getCurrentUser();
 
-type PagePropsFix = {
-  params: IParams & {
- 
-    then: any; 
-    catch: any; 
-    finally?: any; 
-    [Symbol.toStringTag]?: any;
-  };
+  if (!listing) {
+    return (
+      <ClientOnly>
+        <EmptyState />
+      </ClientOnly>
+    );
+  }
+
+  return (
+    <ClientOnly>
+      <ListingClient
+        listing={listing}
+        reservations={reservations}
+        currentUser={currentUser}
+      />
+    </ClientOnly>
+  );
 };
 
-const ListingPage = async ({ params }: PagePropsFix) => {
-  
-    const resolvedParams = params as IParams;
-    
-    const listing = await getListingById(resolvedParams);
-    const reservations = await getReservations(resolvedParams);
-    const currentUser = await getCurrentUser();
-
-    if (!listing) {
-        return (
-            <ClientOnly>
-                <EmptyState/>
-            </ClientOnly>
-        )
-    }
-    return ( <ClientOnly>
-      <ListingClient
-      listing={listing}
-      reservations={reservations}
-      currentUser={currentUser}
-      />
-    </ClientOnly> );
-}
- 
 export default ListingPage;
