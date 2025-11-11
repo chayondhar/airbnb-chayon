@@ -9,11 +9,12 @@ import ListingClient from "./ListingClient";
 export default async function ListingPage({
   params,
 }: {
-  // tell TS “trust me, it’s a string param”
-  params: { listingId: string };
+  params: Promise<{ listingId: string }>;
 }) {
-  const listing = await getListingById({ listingId: params.listingId });
-  const reservations = await getReservations({ listingId: params.listingId });
+  const { listingId } = await params; // ✅ required by Next 15’s async props
+
+  const listing = await getListingById({ listingId });
+  const reservations = await getReservations({ listingId });
   const currentUser = await getCurrentUser();
 
   if (!listing) {
