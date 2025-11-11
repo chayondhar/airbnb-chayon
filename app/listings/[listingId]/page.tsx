@@ -9,12 +9,11 @@ import ListingClient from "./ListingClient";
 export default async function ListingPage({
   params,
 }: {
-  params: Promise<{ listingId: string }>;
+  // tell TS “trust me, it’s a string param”
+  params: { listingId: string };
 }) {
-  const { listingId } = await params; // ✅ new: must await params
-
-  const listing = await getListingById({ listingId });
-  const reservations = await getReservations({ listingId });
+  const listing = await getListingById({ listingId: params.listingId });
+  const reservations = await getReservations({ listingId: params.listingId });
   const currentUser = await getCurrentUser();
 
   if (!listing) {
