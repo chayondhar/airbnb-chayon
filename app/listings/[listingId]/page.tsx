@@ -6,17 +6,15 @@ import ClientOnly from "@/app/components/ClientOnly";
 import EmptyState from "@/app/components/EmptyState";
 import ListingClient from "./ListingClient";
 
-interface IParams {
-  listingId?: string;
-}
+export default async function ListingPage({
+  params,
+}: {
+  params: Promise<{ listingId: string }>;
+}) {
+  const { listingId } = await params; // ✅ new: must await params
 
-interface ListingPageProps {
-  params: IParams;
-}
-
-const ListingPage = async ({ params }: ListingPageProps) => {
-  const listing = await getListingById(params);
-  const reservations = await getReservations(params);
+  const listing = await getListingById({ listingId });
+  const reservations = await getReservations({ listingId });
   const currentUser = await getCurrentUser();
 
   if (!listing) {
@@ -36,6 +34,4 @@ const ListingPage = async ({ params }: ListingPageProps) => {
       />
     </ClientOnly>
   );
-};
-
-export default ListingPage;
+}
