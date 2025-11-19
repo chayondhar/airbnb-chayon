@@ -5,6 +5,9 @@ import Container from "./components/Container";
 import EmptyState from "./components/EmptyState";
 import ListingCard from "./components/listings/ListingCard";
 
+// Mark as dynamic to prevent static generation during build
+export const dynamic = 'force-dynamic';
+
 interface HomeProps {
   searchParams: Promise<IListingsParams>; // <-- Mark as Promise
 }

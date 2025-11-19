@@ -6,6 +6,9 @@ import ClientOnly from "@/app/components/ClientOnly";
 import EmptyState from "@/app/components/EmptyState";
 import ListingClient from "./ListingClient";
 
+// Mark as dynamic to prevent static generation during build
+export const dynamic = 'force-dynamic';
+
 export default async function ListingPage({
   params,
 }: {
