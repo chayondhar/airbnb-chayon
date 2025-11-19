@@ -32,8 +32,11 @@
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@types/bcrypt": "^6.0.0",
+    "@types/leaflet": "^1.9.21",
     "@types/node": "24.10.1",
     "@types/react": "19.2.6",
+    "@types/react-date-range": "^1.4.10",
     "autoprefixer": "^10.4.22",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.3",
