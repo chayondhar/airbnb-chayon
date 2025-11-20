@@ -3,9 +3,10 @@ import bcrypt from "bcrypt";
 import prisma from "@/app/libs/prismadb";
 import { NextResponse } from "next/server";
 
-// Mark route as dynamic to prevent static generation during build
-export const dynamic = 'force-dynamic';
-export const runtime = 'nodejs';
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 export async function POST(
     request: Request

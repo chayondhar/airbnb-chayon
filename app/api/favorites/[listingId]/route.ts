@@ -2,9 +2,11 @@ import { NextResponse } from "next/server";
 import prisma from "@/app/libs/prismadb";
 import getCurrentUser from "@/app/actions/getCurrentUser";
 
-// Mark route as dynamic to prevent static generation during build
-export const dynamic = 'force-dynamic';
-export const runtime = 'nodejs';
+// Ensure this route always runs on the server at request time
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+export const revalidate = 0;
+export const fetchCache = "force-no-store";
 
 interface IParams {
   listingId?: string;
@@ -12,10 +14,10 @@ interface IParams {
 
 export async function POST(
   request: Request,
-  context: { params: Promise<IParams> }
+  { params }: { params: IParams }
 ) {
   try {
-    const { listingId } = await context.params; 
+    const { listingId } = params;
     const currentUser = await getCurrentUser();
 
     if (!currentUser) {
@@ -53,10 +55,10 @@ export async function POST(
 
 export async function DELETE(
   request: Request,
-  context: { params: Promise<IParams> }
+  { params }: { params: IParams }
 ) {
   try {
-    const { listingId } = await context.params;
+    const { listingId } = params;
     const currentUser = await getCurrentUser();
 
     if (!currentUser) {
